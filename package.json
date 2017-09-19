@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start:vanilla": "http-server ./02-wc-spec & npm run tsc:vanilla -- -w",
-    "tsc:vanilla": "tsc -p ./02-wc-spec"
+    "tsc:vanilla": "npm run clean:vanilla && tsc -p ./02-wc-spec",
+    "clean:vanilla": "rm -rf ./02-wc-spec/ts-output"
   },
   "devDependencies": {
     "@types/jquery": "3.2.12",
