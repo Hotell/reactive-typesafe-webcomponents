@@ -1,4 +1,4 @@
-import { CreateTrickItem } from './trick-item.template.js'
+import { CreateTrickItem } from './sfc/create-trick-item.js'
 
 type Attrs = 'name' | 'age'
 type Props = {
@@ -134,7 +134,7 @@ export class User extends HTMLElement implements Props {
     // render up to date items
     if (value.length) {
       value.forEach(trick => {
-        const listNode = CreateTrickItem(trick, this.emitRemoveTrick)
+        const listNode = CreateTrickItem({ trick, onRemove: this.emitRemoveTrick })
         this.view.trickList.appendChild(listNode)
       })
     }

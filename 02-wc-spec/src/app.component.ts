@@ -1,3 +1,4 @@
+import { CreateLogEvent } from './sfc/create-log-event.js'
 import './user.component.js'
 
 import { Trick, User, Events as UserCustomEvents } from './user.component'
@@ -91,26 +92,8 @@ class App extends HTMLElement {
     this.view.user.tricks = this.tricks
   }
 
-  private logTrick({ name, difficulty }: Trick, isRemoved = false) {
-    const logTime = new Date()
-    const dateOptions = {
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-    }
-    const listItemTemplate = document.createElement('template')
-    const logTypeMessage = isRemoved ? 'forgot' : 'learned'
-    const className = isRemoved ? 'added' : 'removed'
-
-    listItemTemplate.innerHTML = `
-      <li class="${className}">${logTime.toLocaleDateString('en-US', dateOptions)} - ${logTypeMessage} trick -> 
-        <span>name: ${name}</span> 
-        <span>difficulty: ${difficulty}</span>
-      </li>`
-
-    const liItem = listItemTemplate.content.cloneNode(true)
-
-    this.view.newTricksList.appendChild(liItem)
+  private logTrick(trick: Trick, isRemoved = false) {
+    this.view.newTricksList.appendChild(CreateLogEvent({ trick, isRemoved }))
   }
 }
 
