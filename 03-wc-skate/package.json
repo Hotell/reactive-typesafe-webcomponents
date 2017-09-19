@@ -1,0 +1,28 @@
+{
+  "name": "03-wc-skate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "rm -rf ts-output dist",
+    "start": "webpack-dev-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "awesome-typescript-loader": "^3.2.3",
+    "http-server": "^0.10.0",
+    "typescript": "^2.5.2",
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.8.2"
+  },
+  "dependencies": {
+    "@webcomponents/webcomponentsjs": "^1.0.11",
+    "lit-html": "^0.6.0",
+    "preact": "^8.2.5",
+    "skatejs": "^5.0.0-alpha.16",
+    "tslib": "^1.7.1"
+  }
+}

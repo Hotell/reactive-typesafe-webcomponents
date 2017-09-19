@@ -1,0 +1,18 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "target": "es5",
+    "module": "es2015",
+    "outDir": "./ts-output",
+    "jsxFactory": "h",
+    "jsx": "react",
+    "importHelpers": true,
+    "baseUrl": ".",
+    "typeRoots": ["custom-types", "node_modules/@types"],
+    "paths": {
+      "skatejs": ["custom-types/skatejs"]
+    }
+  },
+  "include": ["./"],
+  "exclude": ["node_modules"]
+}
