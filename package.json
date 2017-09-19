@@ -1,0 +1,13 @@
+{
+  "name": "reactive-typesafe-webcomponents",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jquery": "3.2.12",
+    "http-server": "0.10.0",
+    "prettier": "1.7.0",
+    "typescript": "2.5.2"
+  },
+  "dependencies": {}
+}
