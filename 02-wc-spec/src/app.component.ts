@@ -1,6 +1,6 @@
-import { trickItemTemplate } from './trick-item.template.js'
-import { Trick, User, Events as UserCustomEvents } from './user.component'
 import './user.component.js'
+
+import { Trick, User, Events as UserCustomEvents } from './user.component'
 
 const template = document.createElement('template')
 template.innerHTML = `
