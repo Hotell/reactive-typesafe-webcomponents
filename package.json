@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "start:vanilla": "http-server ./02-wc-spec & npm run tsc:vanilla -- -w",
+    "tsc:vanilla": "tsc -p ./02-wc-spec"
+  },
   "devDependencies": {
     "@types/jquery": "3.2.12",
     "http-server": "0.10.0",

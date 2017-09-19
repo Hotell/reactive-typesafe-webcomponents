@@ -1,4 +1,5 @@
-import { trickItemTemplate } from './trick-item.template.js'
+import { CreateTrickItem } from './trick-item.template.js'
+
 type Attrs = 'name' | 'age'
 type Props = {
   name: string
@@ -42,9 +43,22 @@ template.innerHTML = `
   }
   ul > li {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: .5em;
+    transition: background-color ease-out 250ms;
+  }
+  ul > li:nth-child(2n){
+    background-color: #e1bee7;
+  }
+  ul > li:hover {
+    background-color: #eceff1;
+  }
+  ul > li > button {
+    background-color: #ff5722;
     padding: .5em;
   }
+
   input, select, button {
     padding: .3em;
     border-radius: .3em;
@@ -63,7 +77,7 @@ template.innerHTML = `
   }
   </style>
   <heading>
-    Hello <b id="name"></b>!
+    Hello <b id="name"></b>! Let's skate!
   </heading>
   <div>
     Only <b id="age"></b> years old? Time to learn new tricks!
@@ -78,7 +92,10 @@ template.innerHTML = `
     </select>
     <button>Learn Trick</button>
   </form>
-  <ul id="trick-list"></ul>
+  <div>
+    <h4>User knows following tricks:</h4>
+    <ul id="trick-list"></ul>
+  </div>
 `
 
 export class User extends HTMLElement implements Props {
@@ -86,6 +103,7 @@ export class User extends HTMLElement implements Props {
   static get events() {
     return {
       learnTrick: 'learnTrick',
+      removeTrick: 'removeTrick',
     }
   }
   static get observedAttributes(): Array<Attrs> {
@@ -109,7 +127,17 @@ export class User extends HTMLElement implements Props {
   private _tricks: Array<Trick> = []
   set tricks(value: Array<Trick>) {
     this._tricks = value
-    this.render()
+
+    // empty view
+    this.view.trickList.innerHTML = ''
+
+    // render up to date items
+    if (value.length) {
+      value.forEach(trick => {
+        const listNode = CreateTrickItem(trick, this.emitRemoveTrick)
+        this.view.trickList.appendChild(listNode)
+      })
+    }
   }
   get tricks() {
     return this._tricks
@@ -181,12 +209,16 @@ export class User extends HTMLElement implements Props {
 
     this.view.name.textContent = this.name
     this.view.age.textContent = String(this.age)
-    this.view.trickList.innerHTML = this.tricks.map(trick => trickItemTemplate(trick)).join('')
   }
 
   private emitLearnTrick(trick: Trick) {
     const eventConfig = { bubble: true, composed: true, detail: trick }
     const event = new CustomEvent(User.events.learnTrick, eventConfig)
+    this.shadowRoot!.dispatchEvent(event)
+  }
+  private emitRemoveTrick = (trick: Trick) => {
+    const eventConfig = { bubble: true, composed: true, detail: trick }
+    const event = new CustomEvent(User.events.removeTrick, eventConfig)
     this.shadowRoot!.dispatchEvent(event)
   }
 }

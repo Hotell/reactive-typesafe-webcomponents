@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@types/jquery@^3.2.12":
+"@types/jquery@3.2.12":
   version "3.2.12"
   resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.2.12.tgz#f496823108c3874c97c9a822e675a3926ee64b46"
 
@@ -48,7 +48,7 @@ http-proxy@^1.8.1:
     eventemitter3 "1.x.x"
     requires-port "1.x.x"
 
-http-server@^0.10.0:
+http-server@0.10.0:
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/http-server/-/http-server-0.10.0.tgz#b2a446b16a9db87ed3c622ba9beb1b085b1234a7"
   dependencies:
@@ -60,10 +60,6 @@ http-server@^0.10.0:
     optimist "0.6.x"
     portfinder "^1.0.13"
     union "~0.4.3"
-
-jquery@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
 
 mime@^1.2.11:
   version "1.4.0"
@@ -110,7 +106,7 @@ portfinder@^1.0.13:
     debug "^2.2.0"
     mkdirp "0.5.x"
 
-prettier@^1.7.0:
+prettier@1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.7.0.tgz#47481588f41f7c90f63938feb202ac82554e7150"
 
@@ -122,7 +118,7 @@ requires-port@1.x.x:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
 
-typescript@^2.5.2:
+typescript@2.5.2:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.5.2.tgz#038a95f7d9bbb420b1bf35ba31d4c5c1dd3ffe34"
 
