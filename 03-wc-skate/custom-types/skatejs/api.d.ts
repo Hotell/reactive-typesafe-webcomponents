@@ -22,7 +22,7 @@ export class Component<Props = {}> extends HTMLElement {
   // It works in combination with ElementAttributesProperty. It placed in jsx.d.ts.
   // more detail, see: https://www.typescriptlang.org/docs/handbook/jsx.html
   //               and https://github.com/skatejs/skatejs/pull/952#issuecomment-264500153
-  props: Partial<Props> & ComponentDefaultProps
+  props: Props & ComponentDefaultProps
 
   static is: string
   static props: ComponentProps<any, any>

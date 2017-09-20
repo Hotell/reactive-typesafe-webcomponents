@@ -129,7 +129,7 @@ class User extends Component<Props> {
         </form>
         <div>
           <h4>User knows following tricks:</h4>
-          <ul>{tricks!.map(trick => <TrickItem trick={trick} onRemove={this.emitRemoveTrick} />)}</ul>
+          <ul>{tricks.map(trick => <TrickItem trick={trick} onRemove={this.emitRemoveTrick} />)}</ul>
         </div>
       </div>
     )

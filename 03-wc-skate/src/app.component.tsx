@@ -46,19 +46,13 @@ class App extends Component<Props> {
     this.logTrick(detail, false)
   }
   private handleRemoveTrick = ({ detail }: UserCustomEvent) => {
-    const newTricks = this.props.tricks!.filter(trick => trick !== detail)
+    const newTricks = this.props.tricks.filter(trick => trick !== detail)
     // update props
     this.props = { tricks: newTricks }
     this.logTrick(detail, true)
   }
 
-  connectedCallback() {
-    super.connectedCallback()
-    console.log('connected')
-  }
   renderCallback() {
-    console.log('render')
-
     const { tricks } = this.props
 
     return (
