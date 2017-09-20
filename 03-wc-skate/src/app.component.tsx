@@ -1,4 +1,5 @@
 import { h, Component, define, props } from 'skatejs'
+import { PreactHTMLAttributes } from 'preact'
 
 import User, { UserCustomEvent } from './user.component'
 import { Trick } from './types'
@@ -84,6 +85,14 @@ class App extends Component<Props> {
 
   private logTrick(trick: Trick, isRemoved: boolean) {
     this.log = [...this.log, { trick, isRemoved, timestamp: Date.now() }]
+  }
+}
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'sk-app': Props & PreactHTMLAttributes
+    }
   }
 }
 
