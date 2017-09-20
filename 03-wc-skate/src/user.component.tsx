@@ -136,10 +136,10 @@ class User extends Component<Props> {
   }
 
   private emitLearnTrick(trick: Trick) {
-    emit(this.shadowRoot!, User.events.learnTrick, { detail: trick, composed: true })
+    emit(this, User.events.learnTrick, { detail: trick })
   }
   private emitRemoveTrick = (trick: Trick) => {
-    emit(this.shadowRoot!, User.events.removeTrick, { detail: trick, composed: true })
+    emit(this, User.events.removeTrick, { detail: trick })
   }
   private handleNewTrickAddition = (event: Event) => {
     event.preventDefault()

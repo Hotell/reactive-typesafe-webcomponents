@@ -19,7 +19,9 @@ export const TrickLog = ({ trick, isRemoved, timestamp }: Props) => {
 
   return (
     <li class={className}>
-      {logTime.toLocaleDateString('en-US', dateOptions)} - {logTypeMessage} trick ->
+      <span>
+        {logTime.toLocaleDateString('en-US', dateOptions)} - {logTypeMessage} trick ->
+      </span>
       <span>name: {trick.name}</span>
       <span>difficulty: {trick.difficulty}</span>
     </li>

@@ -30,6 +30,9 @@ class App extends Component<Props> {
      .log > li.removed {
        text-shadow: 1px 1px 1px #9ccc65;
      }
+     .log > li > span {
+       padding-right: 1em;
+     }
      small {
        color: grey;
        font-size: .7em;
