@@ -11,7 +11,7 @@ class App extends Component<Props> {
       <div>
         Hello world
         <div>
-          <User.is />
+          <User.is name="Martin" age={30} tricks={[]} />
         </div>
       </div>
     )
