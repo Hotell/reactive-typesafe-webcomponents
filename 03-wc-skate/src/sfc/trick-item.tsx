@@ -8,8 +8,8 @@ type Props = {
 
 export const TrickItem = ({ trick, onRemove }: Props) => (
   <li>
-    <span>name: ${trick.name}</span>
-    <span>difficulty: ${trick.difficulty}</span>
+    <span>name: {trick.name}</span>
+    <span>difficulty: {trick.difficulty}</span>
     {onRemove && <button onClick={() => onRemove(trick)}>X</button>}
   </li>
 )

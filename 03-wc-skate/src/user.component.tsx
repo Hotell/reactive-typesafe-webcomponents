@@ -1,4 +1,5 @@
 import { h, Component, define, props, emit } from 'skatejs'
+import { PreactHTMLAttributes } from 'preact'
 
 import { Trick } from './types'
 import { TrickItem } from './sfc/trick-item'
@@ -8,6 +9,11 @@ type Props = {
   age: number
   tricks: Trick[]
 }
+type Events = {
+  onLearnTrick(event: UserCustomEvent): void
+  onRemoveTrick(event: UserCustomEvent): void
+}
+export type UserCustomEvent = Event & { detail: Trick }
 
 class User extends Component<Props> {
   static readonly is = 'sk-user'
@@ -22,8 +28,8 @@ class User extends Component<Props> {
   }
   static get events() {
     return {
-      learnTrick: 'learnTrick',
-      removeTrick: 'removeTrick',
+      learnTrick: 'learntrick',
+      removeTrick: 'removetrick',
     }
   }
 
@@ -108,13 +114,12 @@ class User extends Component<Props> {
         </div>
         <form onSubmit={this.handleNewTrickAddition}>
           <input
-            id="trickName"
             name="trickName"
             value={this.trickName}
             onInput={this.changeValue}
             ref={(node: HTMLInputElement) => (this.refs.input = node)}
           />
-          <select id="trickDifficulty" name="trickDifficulty" value={this.trickDifficulty} onChange={this.changeValue}>
+          <select name="trickDifficulty" value={this.trickDifficulty} onChange={this.changeValue}>
             <option value="">--chose difficulty--</option>
             <option value="easy">easy</option>
             <option value="medium">medium</option>
@@ -124,17 +129,17 @@ class User extends Component<Props> {
         </form>
         <div>
           <h4>User knows following tricks:</h4>
-          <ul id="trick-list">{tricks!.map(trick => <TrickItem trick={trick} onRemove={this.emitRemoveTrick} />)}</ul>
+          <ul>{tricks!.map(trick => <TrickItem trick={trick} onRemove={this.emitRemoveTrick} />)}</ul>
         </div>
       </div>
     )
   }
 
   private emitLearnTrick(trick: Trick) {
-    emit(this, User.events.learnTrick, { detail: trick })
+    emit(this.shadowRoot!, User.events.learnTrick, { detail: trick, composed: true })
   }
   private emitRemoveTrick = (trick: Trick) => {
-    emit(this, User.events.removeTrick, { detail: trick })
+    emit(this.shadowRoot!, User.events.removeTrick, { detail: trick, composed: true })
   }
   private handleNewTrickAddition = (event: Event) => {
     event.preventDefault()
@@ -164,7 +169,7 @@ class User extends Component<Props> {
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      'sk-user': Props
+      'sk-user': Props & Partial<Events> & PreactHTMLAttributes
     }
   }
 }
