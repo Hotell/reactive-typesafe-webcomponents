@@ -13,6 +13,7 @@
   "license": "ISC",
   "devDependencies": {
     "awesome-typescript-loader": "^3.2.3",
+    "find-root": "^1.1.0",
     "http-server": "^0.10.0",
     "typescript": "^2.5.2",
     "webpack": "^3.6.0",
