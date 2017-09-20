@@ -7,7 +7,6 @@ type Props = {
   age: number
   tricks: Array<Trick>
 }
-export type Events = keyof typeof User.events
 
 const template = document.createElement('template')
 template.innerHTML = `

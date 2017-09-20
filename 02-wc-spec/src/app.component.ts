@@ -1,7 +1,7 @@
 import { CreateLogEvent } from './sfc/create-log-event.js'
 import './user.component.js'
 
-import { User, Events as UserCustomEvents } from './user.component'
+import { User } from './user.component'
 import { Trick } from './types'
 
 const template = document.createElement('template')
@@ -10,7 +10,7 @@ template.innerHTML = `
     * {
      // --main-color: #7cb342;
     }
-    #newTricksList > li { 
+    #newTricksList > li {
       font-size: 1.2rem;
     }
     #newTricksList > li.added {
