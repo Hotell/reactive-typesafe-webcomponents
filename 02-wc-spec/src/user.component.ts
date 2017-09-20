@@ -1,4 +1,5 @@
 import { CreateTrickItem } from './sfc/create-trick-item.js'
+import { Trick } from './types'
 
 type Attrs = 'name' | 'age'
 type Props = {
@@ -7,10 +8,6 @@ type Props = {
   tricks: Array<Trick>
 }
 export type Events = keyof typeof User.events
-export type Trick = {
-  name: string
-  difficulty: 'easy' | 'medium' | 'hard'
-}
 
 const template = document.createElement('template')
 template.innerHTML = `

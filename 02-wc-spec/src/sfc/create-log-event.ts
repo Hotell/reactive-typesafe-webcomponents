@@ -1,4 +1,4 @@
-import { Trick } from '../user.component'
+import { Trick } from '../types'
 
 type Props = {
   trick: Trick
