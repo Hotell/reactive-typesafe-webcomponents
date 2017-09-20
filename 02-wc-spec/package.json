@@ -1,0 +1,17 @@
+{
+  "name": "02-wc-spec",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "rm -rf ts-output dist",
+    "start": "http-server ./ & tsc -w"
+  },
+  "keywords": [],
+  "author": "Martin Hochel <hochelmartin@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "0.10.0",
+    "typescript": "2.5.2"
+  }
+}

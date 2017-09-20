@@ -1,24 +1,13 @@
 {
   "name": "reactive-typesafe-webcomponents",
+  "private": true,
   "version": "1.0.0",
-  "main": "index.js",
   "license": "MIT",
-  "scripts": {
-    "start:vanilla": "http-server ./02-wc-spec & npm run tsc:vanilla -- -w",
-    "tsc:vanilla": "npm run clean:vanilla && tsc -p ./02-wc-spec",
-    "clean:vanilla": "rm -rf ./02-wc-spec/ts-output",
-    "start:skate": "http-server ./03-wc-skate & npm run tsc:skate -- -w",
-    "tsc:skate": "npm run clean:skate && tsc -p ./03-wc-skate",
-    "clean:skate": "rm -rf ./03-wc-skate/ts-output"
-  },
+  "scripts": {},
   "devDependencies": {
-    "@types/jquery": "3.2.12",
-    "awesome-typescript-loader": "3.2.3",
     "http-server": "^0.10.0",
     "prettier": "1.7.0",
-    "typescript": "2.5.2",
-    "webpack": "3.6.0",
-    "webpack-dev-server": "2.8.2"
+    "typescript": "2.5.2"
   },
   "dependencies": {
     "preact": "^8.2.5",
