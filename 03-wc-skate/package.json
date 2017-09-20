@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prestart": "rm -rf ts-output dist",
-    "start": "webpack-dev-server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "webpack-dev-server"
   },
   "keywords": [],
   "author": "",

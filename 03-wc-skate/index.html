@@ -11,15 +11,22 @@
       font-family: sans-serif;
     }
   </style>
-  <script type="module">
-
-    import './dist/bundle.js';
-  </script>
-  <!-- <script src="./dist/bundle.js"></script> -->
-
 </head>
 
 <body>
+  <section class="nosupport" hidden>
+    <h4>Apologies.. your browser doesn't support ES Modules. </h4>
+    <p>You <a href="https://github.com/paulirish/es-modules-todomvc#readme">may be able to enable them with a flag</a>.
+  </section>
+
+  <script nomodule>
+    // script only runs browsers that don't support modules (ideally)
+    document.querySelector( '.nosupport' ).hidden = false;
+  </script>
+  <script type="module">
+    import './dist/bundle.js';
+  </script>
+
   <sk-app></sk-app>
 </body>
 
