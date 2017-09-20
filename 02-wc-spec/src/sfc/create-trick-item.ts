@@ -1,4 +1,5 @@
-import { Trick } from '../user.component'
+import { Trick } from '../types'
+
 
 type Props = {
   trick: Trick
@@ -11,7 +12,7 @@ export const CreateTrickItem = ({ trick, onRemove }: Props) => {
   const template = document.createElement('template')
   template.innerHTML = `
   <li>
-  <span>name: ${trick.name}</span> 
+  <span>name: ${trick.name}</span>
   <span>difficulty: ${trick.difficulty}</span>
   ${isRemovable && '<button>X</button>'}
   </li>

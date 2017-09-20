@@ -19,15 +19,11 @@ template.innerHTML = `
     --default-main-color: #1976d2;
     --content-padding: .5rem;
 
-    display: flex;      
+    display: flex;
     flex-direction: column;
     margin: 1rem;
     padding: var(--content-padding);
     box-shadow: 0px 4px 20px 0px #9E9E9E;
-  }
-  button {
-    color: white;
-    background-color: var(--main-color, var(--default-main-color));
   }
   ul {
     list-style: none;
@@ -51,14 +47,36 @@ template.innerHTML = `
     background-color: #ff5722;
     padding: .5em;
   }
-
-  input, select, button {
-    padding: .3em;
-    border-radius: .3em;
-    border: 1px solid grey;
-    font-size: 1em;
+  .form-controll {
+    padding: .5rem .75rem;
+    font-size: 1rem;
+    line-height: 1.25;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: .25rem;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
   }
-  heading {
+  .form-controll:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+  }
+  button {
+    color: #fff;
+    background-color: var(--main-color, var(--default-main-color));
+    border: 1px solid var(--main-color, var(--default-main-color));
+    padding: .5rem .75rem;
+    font-size: 1rem;
+    line-height: 1.25;
+    border-radius: .25rem;
+    transition: all .15s ease-in-out;
+  }
+  select {
+    height: calc(2.25rem + 2px);
+    background-color: white;
+  }
+  header {
     padding: .5em;
     margin: calc(var(--content-padding) * -1);
     margin-bottom: .5em;
@@ -69,15 +87,15 @@ template.innerHTML = `
     padding: .5em
   }
   </style>
-  <heading>
+  <header>
     Hello <b id="name"></b>! Let's skate!
-  </heading>
+  </header>
   <div>
     Only <b id="age"></b> years old? Time to learn new tricks!
   </div>
-  <form>
-    <input id="trickName" name="trickName">
-    <select id="trickDifficulty" name="trickDifficulty">
+  <form autocomplete="off">
+    <input id="trickName" class="form-controll" name="trickName" value="">
+    <select id="trickDifficulty" class="form-controll" name="trickDifficulty">
       <option value="">--chose difficulty--</option>
       <option value="easy">easy</option>
       <option value="medium">medium</option>
