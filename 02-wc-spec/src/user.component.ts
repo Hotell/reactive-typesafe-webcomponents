@@ -12,10 +12,6 @@ export type Trick = {
   difficulty: 'easy' | 'medium' | 'hard'
 }
 
-interface HTMLElementTagNameMap {
-  'sk-user': User
-}
-
 const template = document.createElement('template')
 template.innerHTML = `
   <style>
@@ -223,6 +219,15 @@ export class User extends HTMLElement implements Props {
   }
 }
 
-export default window.customElements.define('sk-user', User)
+declare global {
+  type GlobalElementName = typeof User.is
+  interface HTMLElementTagNameMap {
+    'sk-user': User
+  }
 
-// window.customElements.get('sk-user') // User
+  interface HTMLElementEventMap {
+    learnTrick: CustomEvent & { detail: Trick }
+    removeTrick: CustomEvent & { detail: Trick }
+  }
+}
+export default window.customElements.define(User.is, User)

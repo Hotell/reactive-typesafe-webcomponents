@@ -97,4 +97,10 @@ class App extends HTMLElement {
   }
 }
 
+declare global {
+  interface HTMLElementTagNameMap {
+    'sk-app': App
+  }
+}
+
 export default window.customElements.define(App.is, App)
