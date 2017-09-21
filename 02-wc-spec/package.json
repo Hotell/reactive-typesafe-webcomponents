@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "prestart": "rm -rf ts-output dist",
-    "start": "http-server ./ & tsc -w"
+    "start": "concurrently \"http-server ./\"  \"tsc -w\""
   },
   "keywords": [],
   "author": "Martin Hochel <hochelmartin@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "concurrently": "3.5.0",
     "http-server": "0.10.0",
     "typescript": "2.5.2"
   }
