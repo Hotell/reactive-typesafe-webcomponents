@@ -1,5 +1,5 @@
-import { h } from 'skatejs'
-import { Trick } from 'src/types'
+import { h } from 'preact'
+import { Trick } from '../types'
 
 type Props = {
   trick: Trick

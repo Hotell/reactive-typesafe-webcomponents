@@ -1,5 +1,6 @@
-import { h, Component, define, props } from 'skatejs'
-import { PreactHTMLAttributes } from 'preact'
+import { h, PreactHTMLAttributes } from 'preact'
+import { define, props } from 'skatejs'
+import { Component } from './base'
 
 import User, { UserCustomEvent } from './user.component'
 import { Trick } from './types'
@@ -21,7 +22,7 @@ class App extends Component<Props> {
     * {
       // --main-color: #7cb342;
      }
-     .log > li { 
+     .log > li {
        font-size: 1.2rem;
      }
      .log > li.added {
