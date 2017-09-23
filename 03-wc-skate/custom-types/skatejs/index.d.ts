@@ -3,12 +3,9 @@ export as namespace skate
 
 // Public API
 export {
-  Component,
   ComponentProps,
   PropOptions,
-  StatelessComponent,
   ComponentClass,
-  SFC,
   prop,
   props,
   link,
@@ -20,4 +17,4 @@ export {
   withUnique,
 } from './api'
 
-export { h } from 'preact'
+export { Component } from './api'

@@ -1,28 +1,18 @@
-import { VNode } from 'preact'
-
-type Key = string | number
-
+type Mixed = {}
 export type ComponentProps<El, T> = { [P in keyof T]: PropOptions }
-
-interface ComponentDefaultProps {
-  children?: JSX.Element[]
-  key?: Key
-}
-
-export interface StatelessComponent<Props> {
-  (props: Props, children?: JSX.Element[]): JSX.Element
-}
-export type SFC<P> = StatelessComponent<P>
 
 interface ComponentClass<PropsType> {
   new (props?: PropsType): Component<PropsType>
 }
-export class Component<Props = {}> extends HTMLElement {
+/**
+ * Extending directly from this won't work
+ */
+declare class Component<Props = {}> extends HTMLElement {
   // Special hack for own components type checking.
   // It works in combination with ElementAttributesProperty. It placed in jsx.d.ts.
   // more detail, see: https://www.typescriptlang.org/docs/handbook/jsx.html
   //               and https://github.com/skatejs/skatejs/pull/952#issuecomment-264500153
-  props: Props & ComponentDefaultProps
+  props: Props
 
   static is: string
   static props: ComponentProps<any, any>
@@ -50,7 +40,7 @@ export class Component<Props = {}> extends HTMLElement {
   // NOTE: inferring generics work only on instances, not on implementation type. So this will not give you type safety, you still have to manually annotate those props in your code
   renderCallback(props?: Props): JSX.Element | null
   renderedCallback(): void
-  rendererCallback(shadowRoot: Element, renderCallback: () => VNode): void
+  rendererCallback(shadowRoot: Element, renderCallback: () => Mixed): void
 }
 
 type AttributeReflectionBaseType = boolean | string
@@ -104,7 +94,7 @@ export const prop: (ops?: PropOptions) => PropertyDecorator & PropOptions
 // Mixins
 type Constructor<T> = new (...args: any[]) => T
 
-export function withComponent<T extends Constructor<HTMLElement>>(Base: T): typeof Component
+export function withComponent<T extends Constructor<Component>>(Base?: T): typeof Component
 export function withProps<T extends Constructor<HTMLElement>>(Base: T): T
 export function withRender<T extends Constructor<HTMLElement>>(Base: T): T
 export function withUnique<T extends Constructor<HTMLElement>>(Base: T): T
