@@ -1,13 +1,13 @@
-import { VNode } from 'preact'
-import { Component } from 'skatejs'
+// Type definitions for @skatejs/renderer-preact@0.0.1
+// Project: https://github.com/skatejs/renderer-preact
+// TypeScript Version: 2.5
 
+import { ComponentProps } from 'preact'
+import { Renderer } from 'skatejs'
+
+type Maybe<T> = T | null | undefined
 type Constructor<T> = new (...args: any[]) => T
-
-type Key = string | number
-interface ComponentDefaultProps {
-  children?: JSX.Element[]
-  key?: Key
-}
+type CElement = Constructor<HTMLElement>
 
 // just preact aliases, they should be rmeoved probably, we don't wanna maintain any preact specifics
 export interface StatelessComponent<Props> {
@@ -15,11 +15,12 @@ export interface StatelessComponent<Props> {
 }
 export type SFC<P> = StatelessComponent<P>
 
-export declare class PreactRenderedComponent<P> extends Component<P> {
-  props: P & ComponentDefaultProps
-  rendererCallback(shadowRoot: Element, renderCallback: () => VNode): void
+declare class PreactRenderedComponent<P> extends HTMLElement implements Renderer<P, Maybe<JSX.Element>> {
+  props: P & ComponentProps<any>
+  renderCallback(props?: P): Maybe<JSX.Element>
+  rendererCallback(shadowRoot: Element, renderCallback: () => JSX.Element): void
 }
 
-export default function witPreact<
-  T extends Constructor<Component | HTMLElement> = Constructor<Component | HTMLElement>
->(Base?: T): typeof PreactRenderedComponent
+type WithPreact = new <P>(...args: any[]) => PreactRenderedComponent<P>
+
+export default function witPreact<T extends CElement = CElement>(Base?: T): WithPreact
