@@ -2755,9 +2755,9 @@ signal-exit@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
 
-skatejs@5.0.0-beta.2:
-  version "5.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/skatejs/-/skatejs-5.0.0-beta.2.tgz#aa560721ff50cae01903a0b32f3375b2d558e9d1"
+skatejs@5.0.0-beta.3:
+  version "5.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/skatejs/-/skatejs-5.0.0-beta.3.tgz#430813f10669316d1269149828db697d2ae177e0"
 
 snapdragon-node@^2.0.1:
   version "2.1.1"

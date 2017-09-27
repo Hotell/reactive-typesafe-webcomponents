@@ -23,7 +23,7 @@
     "@skatejs/renderer-preact": "0.0.1",
     "lit-html": "0.6.0",
     "preact": "8.2.5",
-    "skatejs": "5.0.0-beta.2",
+    "skatejs": "5.0.0-beta.3",
     "tslib": "1.7.1"
   }
 }
