@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@skatejs/renderer-preact@0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@skatejs/renderer-preact/-/renderer-preact-0.0.1.tgz#f8a4a6cab9f8b34fcd3009b79dfdfbb0d99cef2c"
+"@skatejs/renderer-preact@0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@skatejs/renderer-preact/-/renderer-preact-0.1.0.tgz#6ca3b1aa9c46c2852078292621e489b0b96d97e6"
 
 "@webcomponents/webcomponentsjs@1.0.13":
   version "1.0.13"
