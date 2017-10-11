@@ -8,6 +8,7 @@ import {
   WithProps,
   WithUnique,
   EventOptions,
+  CustomElement,
 } from './types'
 
 /**
@@ -21,9 +22,9 @@ export const define: <T extends typeof HTMLElement>(ctor: T) => T
  * Emits an Event on elem that is composed, bubbles and is cancelable by default.
  * The return value of emit() is the same as dispatchEvent().
  */
-export function emit(elem: EventTarget, eventName: string, eventOptions?: EventOptions): boolean
+export function emit(elem: EventTarget | typeof HTMLElement, eventName: string, eventOptions?: EventOptions): boolean
 
-export function link(elem: HTMLElement, target: string): (e: ComposedCustomEvent) => void
+export function link(elem: CustomElement, target: string): (e: ComposedCustomEvent) => void
 
 export const props: {
   readonly any: PropOptions & PropertyDecorator
@@ -37,8 +38,8 @@ export const props: {
 export const prop: (ops?: PropOptions) => PropertyDecorator & PropOptions
 
 // Mixins
-export function withComponent<T extends CElement = CElement>(Base?: T): WithComponent<T>
-export function withChildren<T extends CElement = CElement>(Base?: T): WithChildren
-export function withRender<T extends CElement = CElement>(Base?: T): WithRender
-export function withProps<T extends CElement = CElement>(Base?: T): WithProps
-export function withUnique<T extends CElement = CElement>(Base?: T): WithUnique
+export function withComponent<T extends CElement = typeof CustomElement>(Base?: T): WithComponent<T>
+export function withChildren<T extends CElement = typeof CustomElement>(Base?: T): WithChildren
+export function withRender<T extends CElement = typeof CustomElement>(Base?: T): WithRender
+export function withProps<T extends CElement = typeof CustomElement>(Base?: T): WithProps
+export function withUnique<T extends CElement = typeof CustomElement>(Base?: T): WithUnique

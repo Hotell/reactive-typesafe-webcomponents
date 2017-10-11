@@ -1,0 +1,8 @@
+{
+  "typescript.referencesCodeLens.enabled": true,
+  "gitlens.codeLens.enabled": true,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "prettier.semi": false,
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "es5"
+}

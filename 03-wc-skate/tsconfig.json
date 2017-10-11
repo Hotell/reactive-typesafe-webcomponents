@@ -9,8 +9,11 @@
     "importHelpers": true,
     "baseUrl": "./",
     "rootDir": "./",
+    "skipLibCheck": true,
     "typeRoots": ["node_modules/@types"],
     "paths": {
+      "react": ["custom-types/react"],
+      "react-dom": ["custom-types/react-dom"],
       "skatejs": ["custom-types/skatejs"],
       "@skatejs/*": ["custom-types/@skatejs/*"]
     }

@@ -1,23 +1,33 @@
-type Mixed = {}
-type Maybe<T> = T | null | undefined
-type Constructor<T> = new (...args: any[]) => T
-type CElement = Constructor<HTMLElement>
+export type Mixed = {}
+export type Maybe<T> = T | null | undefined
+export type Constructor<T> = new (...args: any[]) => T
+export type CElement = Constructor<HTMLElement>
 
 export type ComponentProps<El, T> = { [P in keyof T]: PropOptions }
 
 // NOTE:
 // - all classes are just ambient definitions (opaque types like), so consumer cannot use them directly
 // - inferring generics work only on instances, not on implementation type. So this will not give you type safety, you still have to manually annotate those props in your code
-declare class Component<P = Mixed> extends HTMLElement {}
-declare class Children<P = Mixed> extends HTMLElement {
+
+// Custom Elements v1
+export declare class CustomElement extends HTMLElement {
+  static readonly observedAttributes: string[]
+  connectedCallback(): void
+  disconnectedCallback(): void
+  attributeChangedCallback(name: string, oldValue: null | string, newValue: null | string): void
+  adoptedCallback(): void
+}
+export declare class Component<P = Mixed> extends CustomElement {}
+
+export declare class Children<P = Mixed> extends CustomElement {
   childrenChangedCallback(): void
 }
 
 /**
  * Implement this interface for any @skatejs/renderer-*
  */
-interface Renderer<P, O> {
-  renderCallback(props?: P): O
+export interface Renderer<P, O> {
+  renderCallback?(props?: P): O
 
   // called after render
   renderedCallback?(): void
@@ -25,7 +35,7 @@ interface Renderer<P, O> {
   rendererCallback(shadowRoot: Element, renderCallback: () => O): void
 }
 
-declare class Render<P = Mixed, O = Mixed> extends HTMLElement implements Renderer<P, O> {
+export declare class Render<P = Mixed, O = Mixed> extends CustomElement implements Renderer<P, O> {
   // getter for turning of ShadowDOM
   readonly renderRoot?: this | Mixed
 
@@ -37,7 +47,7 @@ declare class Render<P = Mixed, O = Mixed> extends HTMLElement implements Render
   rendererCallback(shadowRoot: Element, renderCallback: () => O): void
 }
 
-declare class Props<P = Mixed> extends HTMLElement {
+export declare class Props<P = Mixed> extends CustomElement {
   // Special hack for own components type checking.
   // It works in combination with ElementAttributesProperty. It placed in jsx.d.ts.
   // more detail, see: https://www.typescriptlang.org/docs/handbook/jsx.html
@@ -53,7 +63,7 @@ declare class Props<P = Mixed> extends HTMLElement {
   propsUpdatedCallback(next: P, prev: P): boolean | void
 }
 
-declare class Unique extends HTMLElement {
+export declare class Unique extends CustomElement {
   static is: string
 }
 
@@ -62,7 +72,12 @@ export type WithRender = new <P>(...args: any[]) => Render<P>
 export type WithChildren = new <P>(...args: any[]) => Children<P>
 export type WithProps = new <P>(...args: any[]) => Props<P>
 // R -> Renderer
-export type WithComponent<R> = new <P>(...args: any[]) => R & Component<P> & Children<P> & Props<P> & Render<P> & Unique
+export type WithComponent<R> = new <P = Mixed>(...args: any[]) => R &
+  Component<P> &
+  Children<P> &
+  Props<P> &
+  Render<P> &
+  Unique
 
 export interface PropOptions {
   attribute?: PropOptionsAttribute
@@ -73,9 +88,9 @@ export interface PropOptions {
   serialize?: <T>(value: Maybe<T>) => string | null
 }
 
-type PropOptionsAttribute = PropOptionsAttributeIdentifier | PropOptionsAttributeIdentifierMap
-type PropOptionsAttributeIdentifier = boolean | string
-type PropOptionsAttributeIdentifierMap = {
+export type PropOptionsAttribute = PropOptionsAttributeIdentifier | PropOptionsAttributeIdentifierMap
+export type PropOptionsAttributeIdentifier = boolean | string
+export type PropOptionsAttributeIdentifierMap = {
   source?: PropOptionsAttributeIdentifier
   target?: PropOptionsAttributeIdentifier
 }
