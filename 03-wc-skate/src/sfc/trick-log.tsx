@@ -1,5 +1,5 @@
 import { h } from 'preact'
-import { Trick } from 'src/types'
+import { Trick } from '../types'
 
 type Props = {
   trick: Trick

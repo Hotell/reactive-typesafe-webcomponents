@@ -5,13 +5,10 @@
   "license": "MIT",
   "scripts": {},
   "devDependencies": {
-    "http-server": "^0.10.0",
-    "prettier": "1.7.0",
-    "typescript": "2.5.2"
-  },
-  "dependencies": {
-    "preact": "^8.2.5",
-    "skatejs": "^5.0.0-alpha.16"
+    "http-server": "0.10.0",
+    "prettier": "1.7.4",
+    "typescript": "2.5.3",
+    "typescript-lit-html-plugin": "0.0.1"
   },
   "repository": "git@github.com:Hotell/reactive-typesafe-webcomponents.git",
   "author": "Martin Hochel <hochelmartin@gmail.com>"

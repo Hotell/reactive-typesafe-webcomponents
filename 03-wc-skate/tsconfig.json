@@ -7,12 +7,17 @@
     "jsxFactory": "h",
     "jsx": "react",
     "importHelpers": true,
-    "baseUrl": ".",
-    "typeRoots": ["custom-types", "node_modules/@types"],
+    "baseUrl": "./",
+    "rootDir": "./",
+    "skipLibCheck": true,
+    "typeRoots": ["node_modules/@types"],
     "paths": {
-      "skatejs": ["custom-types/skatejs"]
+      "react": ["custom-types/react"],
+      "react-dom": ["custom-types/react-dom"],
+      "skatejs": ["custom-types/skatejs"],
+      "@skatejs/*": ["custom-types/@skatejs/*"]
     }
   },
-  "include": ["./"],
-  "exclude": ["node_modules"]
+  "include": ["."],
+  "exclude": ["node_modules", "ts-output"]
 }

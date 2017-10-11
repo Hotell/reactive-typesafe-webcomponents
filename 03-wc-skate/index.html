@@ -17,7 +17,8 @@
 <body>
   <section class="nosupport" hidden>
     <h4>Apologies.. your browser doesn't support ES Modules. </h4>
-    <p>You <a href="https://github.com/paulirish/es-modules-todomvc#readme">may be able to enable them with a flag</a>.
+    <p>You
+      <a href="https://github.com/paulirish/es-modules-todomvc#readme">may be able to enable them with a flag</a>.
   </section>
 
   <script nomodule>
@@ -29,6 +30,36 @@
   </script>
 
   <sk-app></sk-app>
+
+
+  <no-shadow yell></no-shadow>
+
+  <div>
+    <h3>Various renderers showcase</h3>
+
+    <ul>
+      <li>
+        <h4>React renderer:</h4>
+        <x-hello>World</x-hello>
+      </li>
+      <li>
+        <h4>Preact renderer:</h4>
+        <pr-hello yell>World</pr-hello>
+      </li>
+      <li>
+        <h4>React renderer:</h4>
+        <r-hello yell>World</r-hello>
+      </li>
+      <li>
+        <h4>Html-lit renderer:</h4>
+        <lit-hello yell>World</lit-hello>
+      </li>
+      <li>
+        <h4>Custom renderer:</h4>
+        <cr-hello yell>World</cr-hello>
+      </li>
+    </ul>
+  </div>
 </body>
 
 </html>

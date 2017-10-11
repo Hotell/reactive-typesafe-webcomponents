@@ -1,5 +1,6 @@
-import { h, Component, define, props, emit } from 'skatejs'
-import { PreactHTMLAttributes } from 'preact'
+import { h, PreactHTMLAttributes } from 'preact'
+import { define, props, emit } from 'skatejs'
+import { Component } from './base'
 
 import { Trick } from './types'
 import { TrickItem } from './sfc/trick-item'
