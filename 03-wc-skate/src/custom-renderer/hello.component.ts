@@ -1,7 +1,5 @@
 import { props } from 'skatejs'
-import { html } from 'lit-html'
-
-import { Component, when } from './base'
+import { Component } from './base'
 
 type Props = { yell: boolean }
 class WcHello extends Component<Props> {
@@ -9,12 +7,12 @@ class WcHello extends Component<Props> {
     yell: props.boolean,
   }
   renderCallback({ yell }: Props) {
-    return html`
-        Hello, ${when(yell, html`<strong><slot></slot></strong>`, html`<slot />`)}!
-      `
+    const el = document.createElement('div')
+    el.innerHTML = `Hello, ${yell ? `<strong><slot></slot></strong>` : `<slot />`} !`
+    return el
   }
 }
 
-customElements.define('lit-hello', WcHello)
+customElements.define('cr-hello', WcHello)
 
 export default WcHello

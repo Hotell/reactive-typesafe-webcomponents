@@ -29,3 +29,5 @@ class WcHello extends Component<Props> {
 }
 
 customElements.define('pr-hello', WcHello)
+
+export default WcHello
