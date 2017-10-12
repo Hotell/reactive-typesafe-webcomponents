@@ -1,12 +1,11 @@
 import './user.component'
-
-import { html, render } from 'lit-html'
+import { render, html } from 'lit-html/lib/lit-extended'
 
 import { CreateLogEvent } from './sfc/create-log-event'
-import { Trick } from './types'
+import { Trick, LogItem } from './types'
 import { User } from './user.component'
 
-const template = () => html`
+const css = html`
   <style>
     * {
      // --main-color: #7cb342;
@@ -26,14 +25,6 @@ const template = () => html`
       font-style: italic;
     }
   </style>
-  <h1>Sk8 tricks learning App <small>vanilla WC</small></h1>
-  <div>
-    <h4>Log of new tricks learned today:</h4>
-    <ul id="newTricksList">
-    </ul>
-  </div>
-  <hr>
-  <sk-user name="Martin" age="30"><sk-user>
 `
 
 class App extends HTMLElement {
@@ -47,9 +38,13 @@ class App extends HTMLElement {
     this._tricks = value
   }
 
-  private view: {
-    newTricksList: HTMLUListElement
-    user: User
+  private _logs: Array<LogItem> = []
+  private set logs(value: Array<LogItem>) {
+    this._logs = value
+    this.render()
+  }
+  private get logs() {
+    return this._logs
   }
 
   private handleNewTrick = (event: CustomEvent) => {
@@ -57,34 +52,19 @@ class App extends HTMLElement {
     const newTricks = [...this.tricks, payload]
 
     this.tricks = newTricks
-
     this.logTrick(payload)
-    this.render()
   }
   private handleRemoveTrick = (event: CustomEvent) => {
     const payload = event.detail as Trick
     const newTricks = this.tricks.filter(trick => trick !== payload)
 
     this.tricks = newTricks
-
     this.logTrick(payload, true)
-    this.render()
   }
 
   constructor() {
     super()
     const shadowRoot = this.attachShadow({ mode: 'open' })
-    // shadowRoot.appendChild(template.content.cloneNode(true))
-    // render(template(), shadowRoot)
-    this.render()
-
-    this.view = {
-      newTricksList: shadowRoot.querySelector('#newTricksList') as HTMLUListElement,
-      user: shadowRoot.querySelector('sk-user') as User,
-    }
-
-    this.view.user.addEventListener('learnTrick', this.handleNewTrick)
-    this.view.user.addEventListener('removeTrick', this.handleRemoveTrick)
   }
 
   connectedCallback() {
@@ -93,12 +73,36 @@ class App extends HTMLElement {
   }
 
   render() {
-    // this.view.user.tricks = this.tricks
-    render(template(), this.shadowRoot!)
+    const { tricks, logs } = this
+
+    const log = html`
+      <ul>
+        ${logs.map(item => CreateLogEvent(item))}
+      </ul>
+    `
+
+    const childComponents = html`
+      <sk-user name="Martin" age="30" tricks=${tricks} on-learnTrick=${this.handleNewTrick} on-removeTrick=${this
+      .handleRemoveTrick} ><sk-user>
+    `
+
+    const template = html`
+      ${css}
+      <h1>Sk8 tricks learning App <small>vanilla WC</small></h1>
+      <div>
+        <h4>Log of new tricks learned today:</h4>
+        ${log}
+      </div>
+      <hr>
+      ${childComponents}
+    `
+
+    render(template, this.shadowRoot!)
   }
 
   private logTrick(trick: Trick, isRemoved = false) {
-    this.view.newTricksList.appendChild(CreateLogEvent({ trick, isRemoved }))
+    const newLogs = [...this.logs, { trick, isRemoved, time: new Date() }]
+    this.logs = newLogs
   }
 }
 

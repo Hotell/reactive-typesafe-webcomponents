@@ -1,5 +1,5 @@
+import { html } from 'lit-html/lib/lit-extended'
 import { Trick } from '../types'
-
 
 type Props = {
   trick: Trick
@@ -7,24 +7,15 @@ type Props = {
 }
 
 export const CreateTrickItem = ({ trick, onRemove }: Props) => {
-  const isRemovable = Boolean(onRemove)
-
-  const template = document.createElement('template')
-  template.innerHTML = `
-  <li>
-  <span>name: ${trick.name}</span>
-  <span>difficulty: ${trick.difficulty}</span>
-  ${isRemovable && '<button>X</button>'}
-  </li>
+  return html`
+    <li>
+      <span>name: ${trick.name}</span>
+      <span>difficulty: ${trick.difficulty}</span>
+      ${Button({ onRemove: () => onRemove!(trick) })}
+    </li>
   `
-
-  const node = template.content.cloneNode(true) as HTMLElement
-
-  if (onRemove) {
-    node.querySelector('button')!.addEventListener('click', () => {
-      onRemove(trick)
-    })
-  }
-
-  return node
 }
+
+const Button = ({ onRemove }: { onRemove(payload: Trick): void }) => html`
+  <button on-click=${onRemove}>X</button>
+`
