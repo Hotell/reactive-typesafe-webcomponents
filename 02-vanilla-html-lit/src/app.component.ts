@@ -78,13 +78,16 @@ class App extends HTMLElement {
   render() {
     const { tricks, logs } = this
 
-    const log = html`
-      <ul class="log">
-        ${logs.map(item => CreateLogEvent(item))}
-      </ul>
-    `
-
-    const childComponents = html`
+    const template = html`
+      ${css}
+      <h1>Sk8 tricks learning App <small>vanilla WC</small></h1>
+      <div>
+        <h4>Log of new tricks learned today:</h4>
+        <ul class="log">
+          ${logs.map(item => CreateLogEvent(item))}
+        </ul>
+      </div>
+      <hr>
       <sk-user
         name="Martin"
         age="30"
@@ -92,17 +95,6 @@ class App extends HTMLElement {
         on-learnTrick="${this.handleNewTrick}"
         on-removeTrick="${this.handleRemoveTrick}"
       ><sk-user>
-    `
-
-    const template = html`
-      ${css}
-      <h1>Sk8 tricks learning App <small>vanilla WC</small></h1>
-      <div>
-        <h4>Log of new tricks learned today:</h4>
-        ${log}
-      </div>
-      <hr>
-      ${childComponents}
     `
 
     render(template, this.shadowRoot!)

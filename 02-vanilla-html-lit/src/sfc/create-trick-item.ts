@@ -11,11 +11,15 @@ export const CreateTrickItem = ({ trick, onRemove }: Props) => {
     <li>
       <span>name: ${trick.name}</span>
       <span>difficulty: ${trick.difficulty}</span>
-      ${Button({ onRemove: () => onRemove!(trick) })}
+      ${onRemove && html`<button on-click="${handleRemove}">X</button>`}
     </li>
   `
+
+  function handleRemove() {
+    onRemove && onRemove(trick)
+  }
 }
 
 const Button = ({ onRemove }: { onRemove(payload: Trick): void }) => html`
-  <button on-click=${onRemove}>X</button>
+  <button on-click="${onRemove}">X</button>
 `
