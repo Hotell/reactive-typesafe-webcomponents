@@ -1,9 +1,11 @@
 import './user.component'
-import { render, html } from 'lit-html/lib/lit-extended'
 
+import { html } from 'lit-html/lib/lit-extended'
+
+import { withRender } from './mixins/withRender'
+import { withShadow } from './mixins/withShadow'
 import { CreateLogEvent } from './sfc/create-log-event'
-import { Trick, LogItem } from './types'
-import { User } from './user.component'
+import { LogItem, Trick } from './types'
 
 const css = html`
   <style>
@@ -30,7 +32,7 @@ const css = html`
   </style>
 `
 
-class App extends HTMLElement {
+class App extends withRender(withShadow(HTMLElement)) {
   static readonly is = 'sk-app'
 
   private _tricks: Array<Trick> = [{ name: 'Ollie', difficulty: 'easy' }]
@@ -65,20 +67,15 @@ class App extends HTMLElement {
     this.logTrick(payload, true)
   }
 
-  constructor() {
-    super()
-    const shadowRoot = this.attachShadow({ mode: 'open' })
-  }
-
   connectedCallback() {
+    super.connectedCallback()
     console.log('App mounted')
-    this.render()
   }
 
   render() {
     const { tricks, logs } = this
 
-    const template = html`
+    return html`
       ${css}
       <h1>Sk8 tricks learning App <small>vanilla WC</small></h1>
       <div>
@@ -96,8 +93,6 @@ class App extends HTMLElement {
         on-removeTrick="${this.handleRemoveTrick}"
       ><sk-user>
     `
-
-    render(template, this.shadowRoot!)
   }
 
   private logTrick(trick: Trick, isRemoved = false) {

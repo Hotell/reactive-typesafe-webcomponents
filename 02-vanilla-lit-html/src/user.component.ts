@@ -1,7 +1,9 @@
-import { render, html } from 'lit-html/lib/lit-extended'
+import { html } from 'lit-html/lib/lit-extended'
 
-import { Trick } from './types'
+import { withRender } from './mixins/withRender'
+import { withShadow } from './mixins/withShadow'
 import { CreateTrickItem } from './sfc/create-trick-item'
+import { Trick } from './types'
 
 type Attrs = 'name' | 'age'
 type Props = {
@@ -89,7 +91,7 @@ const css = html`
   </style>
 `
 
-export class User extends HTMLElement implements Props {
+export class User extends withRender(withShadow(HTMLElement)) implements Props {
   static readonly is = 'sk-user'
   static get events() {
     return {
@@ -145,28 +147,23 @@ export class User extends HTMLElement implements Props {
     input.focus()
   }
 
-  constructor() {
-    super()
-    const shadowRoot = this.attachShadow({ mode: 'open' })
-  }
-
   attributeChangedCallback(name: Attrs, oldValue: string | null, newValue: string | null) {
     this.render()
   }
 
   connectedCallback() {
-    console.log('component mounted!')
-    this.render()
+    super.connectedCallback()
+    console.log('User mounted!')
   }
 
   disconnectedCallback() {
-    console.log('goodbye!')
+    console.log('User unmounted!')
   }
 
   render() {
     const { name, age, tricks } = this
 
-    const template = html`
+    return html`
       ${css}
       <header>
         Hello <b id="name">${name}</b>! Let's skate!
@@ -191,8 +188,6 @@ export class User extends HTMLElement implements Props {
         </ul>
       </div>
     `
-
-    render(template, this.shadowRoot!)
   }
 
   private emitLearnTrick(trick: Trick) {
