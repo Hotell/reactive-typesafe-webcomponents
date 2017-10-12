@@ -7,23 +7,26 @@ import { User } from './user.component'
 
 const css = html`
   <style>
-    * {
-     // --main-color: #7cb342;
-    }
-    #newTricksList > li {
-      font-size: 1.2rem;
-    }
-    #newTricksList > li.added {
-      text-shadow: 1px 1px 1px #ef6c00;
-    }
-    #newTricksList > li.removed {
-      text-shadow: 1px 1px 1px #9ccc65;
-    }
-    small {
-      color: grey;
-      font-size: .7em;
-      font-style: italic;
-    }
+   * {
+      /* --main-color: #7cb342; */
+     }
+     .log > li {
+       font-size: 1.2rem;
+     }
+     .log > li.added {
+       text-shadow: 1px 1px 1px #9ccc65;
+      }
+      .log > li.removed {
+        text-shadow: 1px 1px 1px #ef6c00;
+      }
+     .log > li > span {
+       padding-right: 1em;
+     }
+     small {
+       color: grey;
+       font-size: .7em;
+       font-style: italic;
+     }
   </style>
 `
 
@@ -76,14 +79,19 @@ class App extends HTMLElement {
     const { tricks, logs } = this
 
     const log = html`
-      <ul>
+      <ul class="log">
         ${logs.map(item => CreateLogEvent(item))}
       </ul>
     `
 
     const childComponents = html`
-      <sk-user name="Martin" age="30" tricks=${tricks} on-learnTrick=${this.handleNewTrick} on-removeTrick=${this
-      .handleRemoveTrick} ><sk-user>
+      <sk-user
+        name="Martin"
+        age="30"
+        tricks="${tricks}"
+        on-learnTrick="${this.handleNewTrick}"
+        on-removeTrick="${this.handleRemoveTrick}"
+      ><sk-user>
     `
 
     const template = html`

@@ -14,10 +14,10 @@ export const CreateLogEvent = ({ trick, time, isRemoved = false }: Props) => {
     second: '2-digit',
   }
   const logTypeMessage = isRemoved ? 'forgot' : 'learned'
-  const cxName = isRemoved ? 'added' : 'removed'
+  const cxName = isRemoved ? 'removed' : 'added'
 
   return html`
-    <li class="${cxName}">
+    <li className="${cxName}">
       ${time.toLocaleDateString('en-US', dateOptions)} - ${logTypeMessage} trick ->
       <span>name: ${trick.name}</span>
       <span>difficulty: ${trick.difficulty}</span>
