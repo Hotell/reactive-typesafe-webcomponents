@@ -1,0 +1,16 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "es2015",
+    "outDir": "./ts-output",
+    "jsxFactory": "h",
+    "jsx": "react",
+    "importHelpers": true,
+    "baseUrl": "./",
+    "rootDir": "./",
+    "skipLibCheck": true
+  },
+  "include": ["."],
+  "exclude": ["node_modules", "ts-output"]
+}
