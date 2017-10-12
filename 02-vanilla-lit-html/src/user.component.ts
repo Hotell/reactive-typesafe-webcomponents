@@ -126,13 +126,6 @@ export class User extends HTMLElement implements Props {
     return this._tricks
   }
 
-  private view: {
-    form: HTMLFormElement
-    trickList: HTMLUListElement
-    age: HTMLElement
-    name: HTMLElement
-  }
-
   private handleNewTrickAddition = (event: Event) => {
     event.preventDefault()
     const target = event.target as EventTarget & { elements: [HTMLInputElement, HTMLSelectElement] }
@@ -145,7 +138,7 @@ export class User extends HTMLElement implements Props {
 
     this.emitLearnTrick(newTrick)
 
-    // mutation muhahaha ! bleh! eak!
+    // @TODO -> refactor to data driven mutation muhahaha ! bleh! eak!
     input.value = ''
     select.value = ''
 
@@ -172,25 +165,6 @@ export class User extends HTMLElement implements Props {
 
   render() {
     const { name, age, tricks } = this
-    console.log({
-      props: {
-        name,
-        age,
-        tricks,
-      },
-    })
-
-    const button = html`
-      <button on-click=${(e: Event) => {
-        console.log(e)
-      }}>Learn Trick</button>
-    `
-
-    const Form = ({ children }: any) => html`
-      <form autocomplete="off" on-submit=${this.handleNewTrickAddition}>
-        ${children}
-      </form>
-    `
 
     const template = html`
       ${css}
@@ -200,21 +174,19 @@ export class User extends HTMLElement implements Props {
       <div>
         Only <b id="age">${age}</b> years old? Time to learn new tricks!
       </div>
-        ${Form({
-          children: html`
-            <input id="trickName" class="form-controll" name="trickName">
-            <select id="trickDifficulty" class="form-controll" name="trickDifficulty">
-              <option value="">--chose difficulty--</option>
-              <option value="easy">easy</option>
-              <option value="medium">medium</option>
-              <option value="hard">hard</option>
-            </select>
-            ${button}
-          `,
-        })}
+      <form autocomplete="off" on-submit="${this.handleNewTrickAddition}">
+        <input class="form-controll" name="trickName">
+        <select class="form-controll" name="trickDifficulty">
+          <option value="">--chose difficulty--</option>
+          <option value="easy">easy</option>
+          <option value="medium">medium</option>
+          <option value="hard">hard</option>
+        </select>
+        <button>Learn Trick</button>
+      </form>
       <div>
         <h4>User knows following tricks:</h4>
-        <ul id="trick-list">
+        <ul>
           ${tricks.map(trick => CreateTrickItem({ trick, onRemove: this.emitRemoveTrick }))}
         </ul>
       </div>
