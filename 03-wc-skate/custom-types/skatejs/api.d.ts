@@ -1,6 +1,6 @@
 import {
   PropOptions,
-  CElement,
+  ElementClass,
   ComposedCustomEvent,
   WithComponent,
   WithChildren,
@@ -38,8 +38,8 @@ export const props: {
 export const prop: (ops?: PropOptions) => PropertyDecorator & PropOptions
 
 // Mixins
-export function withComponent<T extends CElement = typeof CustomElement>(Base?: T): WithComponent<T>
-export function withChildren<T extends CElement = typeof CustomElement>(Base?: T): WithChildren
-export function withRender<T extends CElement = typeof CustomElement>(Base?: T): WithRender
-export function withProps<T extends CElement = typeof CustomElement>(Base?: T): WithProps
-export function withUnique<T extends CElement = typeof CustomElement>(Base?: T): WithUnique
+export function withComponent<T extends ElementClass = typeof CustomElement>(Base?: T): WithComponent<T>
+export function withChildren<T extends ElementClass = typeof CustomElement>(Base?: T): WithChildren
+export function withRender<T extends ElementClass = typeof CustomElement>(Base?: T): WithRender
+export function withProps<T extends ElementClass = typeof CustomElement>(Base?: T): WithProps
+export function withUnique<T extends ElementClass = typeof CustomElement>(Base?: T): WithUnique
