@@ -234,7 +234,6 @@ export class User extends HTMLElement implements Props {
 }
 
 declare global {
-  type GlobalElementName = typeof User.is
   interface HTMLElementTagNameMap {
     'sk-user': User
   }

@@ -11,8 +11,8 @@
   "author": "Martin Hochel <hochelmartin@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "concurrently": "3.5.0",
+    "concurrently": "3.5.1",
     "http-server": "0.10.0",
-    "typescript": "2.5.2"
+    "typescript": "2.6.2"
   }
 }

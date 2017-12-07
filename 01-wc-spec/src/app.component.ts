@@ -32,7 +32,7 @@ template.innerHTML = `
     </ul>
   </div>
   <hr>
-  <sk-user name="Martin" age="30"><sk-user>
+  <sk-user name="Martin" age="30"></sk-user>
 `
 
 class App extends HTMLElement {
