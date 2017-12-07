@@ -11,8 +11,8 @@ export type LogItem = {
 
 export type Constructor<T = {}> = new (...args: any[]) => T
 export interface CustomElement extends HTMLElement {
-  connectedCallback(): void
-  disconnectedCallback(): void
-  attributeChangedCallback(name: string, oldValue: null | string, newValue: null | string): void
-  adoptedCallback(): void
+  connectedCallback?(): void
+  disconnectedCallback?(): void
+  attributeChangedCallback?(name: string, oldValue: null | string, newValue: null | string): void
+  adoptedCallback?(): void
 }
