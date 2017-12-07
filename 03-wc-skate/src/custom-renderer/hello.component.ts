@@ -6,7 +6,7 @@ class WcHello extends Component<Props> {
   static readonly props = {
     yell: props.boolean,
   }
-  renderCallback({ yell }: Props) {
+  render({ yell }: Props) {
     const el = document.createElement('div')
     el.innerHTML = `Hello, ${yell ? `<strong><slot></slot></strong>` : `<slot />`} !`
     return el

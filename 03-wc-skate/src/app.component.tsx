@@ -6,16 +6,15 @@ import User, { UserCustomEvent } from './user.component'
 import { Trick } from './types'
 import { TrickLog } from './sfc/trick-log'
 
-type Props = {
-  tricks: Array<Trick>
+type Props = {}
+type State = {
+  tricks: ReadonlyArray<Trick>
 }
 
-class App extends Component<Props> {
-  static readonly is = 'sk-app'
+const initialState: ReadonlyArray<Trick> = [{ name: 'Ollie', difficulty: 'easy' }]
 
-  static readonly props = {
-    tricks: { ...props.array, default: [{ name: 'Ollie', difficulty: 'easy' }] },
-  }
+class App extends Component<Props, State> {
+  static readonly is = 'sk-app'
 
   get styles() {
     return `
@@ -41,23 +40,25 @@ class App extends Component<Props> {
      }`
   }
 
+  state = {
+    tricks: initialState,
+  }
+
   private log: Array<{ trick: Trick; isRemoved: boolean; timestamp: number }> = []
 
   private handleLearnTrick = ({ detail }: UserCustomEvent) => {
-    const newTricks = [...this.props.tricks!, detail]
-    // update props
-    this.props = { tricks: newTricks }
+    const newTricks = [...this.state.tricks!, detail]
+    this.state = { tricks: newTricks }
     this.logTrick(detail, false)
   }
   private handleRemoveTrick = ({ detail }: UserCustomEvent) => {
-    const newTricks = this.props.tricks.filter(trick => trick !== detail)
-    // update props
-    this.props = { tricks: newTricks }
+    const newTricks = this.state.tricks.filter(trick => trick !== detail)
+    this.state = { tricks: newTricks }
     this.logTrick(detail, true)
   }
 
-  renderCallback() {
-    const { tricks } = this.props
+  render() {
+    const { tricks } = this.state
 
     return (
       <div>

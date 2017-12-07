@@ -8,7 +8,7 @@ class WcHello extends Component<Props> {
   static readonly props = {
     yell: props.boolean,
   }
-  renderCallback({ yell }: Props) {
+  render({ yell }: Props) {
     return html`
         Hello, ${when(yell, html`<strong><slot></slot></strong>`, html`<slot />`)}!
       `

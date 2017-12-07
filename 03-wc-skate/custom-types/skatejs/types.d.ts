@@ -1,83 +1,92 @@
 export type Mixed = {}
 export type Maybe<T> = T | null | undefined
-export type Constructor<T> = new (...args: any[]) => T
-export type ElementClass = typeof HTMLElement
+export type Constructor<T = Mixed> = new (...args: any[]) => T
+export type HTMLElementClass = typeof HTMLElement
 
-export type ComponentProps<T, El = ElementClass> = { [P in keyof T]: PropOptions }
+export type ComponentProps<T, E = HTMLElementClass> = { [P in keyof T]: PropOptions }
 
 // NOTE:
 // - all classes are just ambient definitions (opaque types like), so consumer cannot use them directly
 // - inferring generics work only on instances, not on implementation type. So this will not give you type safety, you still have to manually annotate those props in your code
+/**
+ * Implement this interface for any @skatejs/renderer-*
+ */
+export interface Renderer<O> {
+  renderer(root: Node | Element | ShadowRoot, html: (props?: Mixed, state?: Mixed) => O): void
+}
+
+export interface WithComponent<P = Mixed, S = Mixed, C = Mixed>
+  extends CustomElement,
+    WithChildren,
+    WithLifecycle,
+    WithRenderer,
+    WithUpdate<P, S>,
+    WithContext<C> {}
+
+export declare class WithComponent<P = Mixed, S = Mixed, C = Mixed> extends HTMLElement {
+  static readonly observedAttributes: string[]
+}
 
 // Custom Elements v1
-export declare class CustomElement extends HTMLElement {
+export class CustomElement extends HTMLElement {
   static readonly observedAttributes: string[]
   connectedCallback(): void
   disconnectedCallback(): void
   attributeChangedCallback(name: string, oldValue: null | string, newValue: null | string): void
-  adoptedCallback(): void
-}
-export declare class Component<P = Mixed> extends CustomElement {}
-
-export declare class Children extends CustomElement {
-  childrenChangedCallback(): void
+  adoptedCallback?(): void
 }
 
-/**
- * Implement this interface for any @skatejs/renderer-*
- */
-export interface Renderer<P, O> {
-  renderCallback?(props?: P): O
-
-  // called after render
-  renderedCallback?(): void
-
-  rendererCallback(shadowRoot: Element, renderCallback: () => O): void
+export declare class WithChildren extends HTMLElement {
+  childrenUpdated(): void
+}
+export declare class WithLifecycle extends HTMLElement {
+  connecting(): void
+  connected(): void
+  disconnecting(): void
+  disconnected(): void
 }
 
-export declare class Render<P = Mixed, O = Mixed> extends CustomElement implements Renderer<P, O> {
+export declare class WithContext<C = Mixed> extends HTMLElement {
+  context: C
+}
+
+export declare class WithRenderer<O = Mixed | null> extends HTMLElement implements Renderer<O> {
   // getter for turning of ShadowDOM
   readonly renderRoot?: this | Mixed
 
-  renderCallback(props?: P): O
+  updated(props?: Mixed, state?: Mixed): void
+  // called before render
+  rendering?(): void
+  render(props?: Mixed, state?: Mixed): O
+
+  // Default renderer, returns string returned from render and adds it to root via innerHTML
+  // -> override to get own renderer
+  renderer(root: Element | Node | ShadowRoot, html: (props?: Mixed | undefined) => O): void
 
   // called after render
-  renderedCallback?(): void
-
-  rendererCallback(shadowRoot: Element, renderCallback: () => O): void
+  rendered?(): void
 }
 
-export declare class Props<P = Mixed> extends CustomElement {
+export declare class WithUpdate<P = Mixed, S = Mixed> extends HTMLElement {
   // Special hack for own components type checking.
   // It works in combination with ElementAttributesProperty. It placed in jsx.d.ts.
   // more detail, see: https://www.typescriptlang.org/docs/handbook/jsx.html
   //               and https://github.com/skatejs/skatejs/pull/952#issuecomment-264500153
-  props: P
-  // Called whenever props are set, even if they don't change.
-  propsSetCallback(next: P, prev: P): void
+  readonly props: Readonly<P>
+  state: S
 
-  // Called when props actually change.
-  propsChangedCallback(next: P, prev: P): void
+  // Called when props have been set regardless of if they've changed. much like React's componentWillReceiveProps().
+  updating(props?: P, state?: S): void
 
-  // Called to see if the props changed.
-  propsUpdatedCallback(next: P, prev: P): boolean | void
+  // Called to check whether or not the component should call updated(), much like React's shouldComponentUpdate().
+  shouldUpdate(props?: P, state?: S): boolean
+
+  // Called if shouldUpdate returned true, much like React's componentWillUpdate()
+  updated(props?: Mixed, state?: Mixed): void
+
+  // manually force update
+  triggerUpdate(): void
 }
-
-export declare class Unique extends CustomElement {
-  static is: string
-}
-
-export type WithUnique = Constructor<Unique>
-export type WithRender = new <P>(...args: any[]) => Render<P>
-export type WithChildren = new <P>(...args: any[]) => Children
-export type WithProps = new <P>(...args: any[]) => Props<P>
-// R -> Renderer
-export type WithComponent<R> = new <P = Mixed>(...args: any[]) => R &
-  Component<P> &
-  Children &
-  Props<P> &
-  Render<P> &
-  Unique
 
 export interface PropOptions {
   attribute?: PropOptionsAttribute

@@ -12,7 +12,7 @@ class WcHello extends Component<Props> {
   // renderCallback({ name, yell, children }: Props) {
   //   return <div>Hello, {yell ? <strong>{this.props.children}</strong> : children}!</div>
   // }
-  renderCallback({ yell }: Props) {
+  render({ yell }: Props) {
     return (
       <div>
         Hello,{' '}

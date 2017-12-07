@@ -15,12 +15,12 @@ export interface StatelessComponent<Props> {
 }
 export type SFC<P> = StatelessComponent<P>
 
-declare class PreactRenderedComponent<P> extends HTMLElement implements Renderer<P, Maybe<VNode>> {
+declare class PreactRenderedComponent<P = {}, S = {}> extends HTMLElement implements Renderer<Maybe<VNode>> {
   props: P & ComponentProps<any>
-  renderCallback(props?: P): Maybe<VNode>
-  rendererCallback(shadowRoot: Element, renderCallback: () => VNode): void
+  render(props?: P, state?: S): Maybe<VNode>
+  renderer(root: Element, html: () => VNode): void
 }
 
-type WithPreact = new <P>(...args: any[]) => PreactRenderedComponent<P>
+type WithPreact = new <P = {}, S = {}>(...args: any[]) => PreactRenderedComponent<P, S>
 
 export default function witPreact<T extends ElementClass = ElementClass>(Base?: T): WithPreact

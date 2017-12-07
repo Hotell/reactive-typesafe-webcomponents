@@ -1,12 +1,28 @@
-// Type definitions for skatejs@5.0.0-beta.3
+// Type definitions for skatejs 5.0
 // Project: https://github.com/skatejs/skatejs
+// Definitions by: Martin Hochel <https://github.com/Hotell>
+// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.5
 
-// UMD library
 export as namespace skate
 
-// Public API
-export { prop, props, link, define, emit, withComponent, withProps, withRender, withUnique } from './api'
+// Public API: mixins
+export { withComponent, withLifecycle, withContext, withChildren, withUpdate, withRenderer } from './api'
 
-// Public types ( Unfortunately TS doesn't has Opaqur Types like Flow )
-export { ComponentProps, PropOptions, Renderer } from './types'
+// Public API: utils
+export { prop, props, link, define, emit, shadow, name } from './api'
+
+// Public types ( Unfortunately TS doesn't have Opaque Types like Flow )
+export {
+  Constructor,
+  CustomElement,
+  ComponentProps,
+  PropOptions,
+  Renderer,
+  WithComponent,
+  WithLifecycle,
+  WithContext,
+  WithChildren,
+  WithUpdate,
+  WithRenderer,
+} from './types'

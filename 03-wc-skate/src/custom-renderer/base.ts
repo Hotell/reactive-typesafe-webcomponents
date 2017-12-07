@@ -1,21 +1,22 @@
 import { withComponent, Renderer, define, props } from 'skatejs'
 
 const withCustomRenderer = () =>
-  class<P> extends HTMLElement implements Renderer<P, Element> {
-    rendererCallback(shadowRoot: HTMLElement, renderCallback: () => Element): void {
+  class<P> extends HTMLElement implements Renderer<Element> {
+    renderer(root: HTMLElement, html: () => Element): void {
       // erease content
-      shadowRoot.innerHTML = ''
+      root.innerHTML = ''
       // re-render content
-      shadowRoot.appendChild(renderCallback())
+      root.appendChild(html())
     }
   }
 
-const withCustomRendererAsString = () =>
-  class<P> extends HTMLElement implements Renderer<P, string> {
-    rendererCallback(shadowRoot: HTMLElement, renderCallback: () => string): void {
-      // erease content && re-render
-      shadowRoot.innerHTML = renderCallback()
-    }
-  }
+// this is default skate renderer
+// const withCustomRendererAsString = () =>
+//   class<P> extends HTMLElement implements Renderer<string> {
+//     renderer(root: HTMLElement, html: () => string): void {
+//       // erease content && re-render
+//       root.innerHTML = html()
+//     }
+//   }
 
 export const Component = withComponent(withCustomRenderer())

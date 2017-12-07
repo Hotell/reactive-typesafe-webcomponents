@@ -8,7 +8,7 @@ import { TrickItem } from './sfc/trick-item'
 type Props = {
   name: string
   age: number
-  tricks: Trick[]
+  tricks: ReadonlyArray<Trick>
 }
 type Events = {
   onLearnTrick(event: UserCustomEvent): void
@@ -119,7 +119,7 @@ class User extends Component<Props> {
     `
   }
 
-  renderCallback() {
+  render() {
     const { name, age, tricks } = this.props
 
     return (
@@ -137,7 +137,7 @@ class User extends Component<Props> {
             name="trickName"
             value={this.trickName}
             onInput={this.changeValue}
-            ref={(node: HTMLInputElement) => (this.refs.input = node)}
+            ref={node => (this.refs.input = node as HTMLInputElement)}
           />
           <select class="form-controll" name="trickDifficulty" value={this.trickDifficulty} onChange={this.changeValue}>
             <option value="">--chose difficulty--</option>
