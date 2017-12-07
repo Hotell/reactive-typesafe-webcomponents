@@ -91,7 +91,7 @@ class App extends withRender(withShadow(HTMLElement)) {
         tricks="${tricks}"
         on-learnTrick="${this.handleNewTrick}"
         on-removeTrick="${this.handleRemoveTrick}"
-      ><sk-user>
+      ></sk-user>
     `
   }
 
