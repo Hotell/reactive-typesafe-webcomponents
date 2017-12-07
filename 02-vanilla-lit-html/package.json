@@ -11,17 +11,17 @@
   "author": "Martin Hochel <hochelmartin@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@webcomponents/webcomponentsjs": "1.0.14",
+    "@webcomponents/webcomponentsjs": "1.0.20",
     "lit-html": "0.7.1",
-    "tslib": "1.8.0"
+    "tslib": "1.8.1"
   },
   "devDependencies": {
-    "awesome-typescript-loader": "3.2.3",
-    "concurrently": "3.5.0",
+    "awesome-typescript-loader": "3.4.1",
+    "concurrently": "3.5.1",
     "find-root": "1.1.0",
     "http-server": "0.10.0",
-    "typescript": "2.5.3",
-    "webpack": "3.7.1",
-    "webpack-dev-server": "2.9.1"
+    "typescript": "2.6.2",
+    "webpack": "3.10.0",
+    "webpack-dev-server": "2.9.7"
   }
 }
