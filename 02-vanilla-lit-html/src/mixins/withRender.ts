@@ -4,21 +4,23 @@ import { render } from 'lit-html/lib/lit-extended'
 import { Constructor, CustomElement } from '../types'
 
 interface LitElement extends CustomElement {
-  render?(): TemplateResult
+  render(): TemplateResult
 }
 
-export const withRender = <TBase extends Constructor<LitElement>>(Base: TBase) =>
-  class WithRender extends Base {
-    connectedCallback() {
-      super.connectedCallback && super.connectedCallback()
-      const root = this.shadowRoot ? this.shadowRoot : this
-      if (this.render) {
-        const originalRender = this.render.bind(this)
-        this.render = function() {
-          render(originalRender(), root)
-        } as any
+export const withRender = <TBase extends Constructor<HTMLElement>>(Base: TBase) => {
+  abstract class WithRender extends Base {
+    private get renderRoot() {
+      return this.shadowRoot ? this.shadowRoot : this
+    }
+    abstract render(): TemplateResult
 
-        this.render!()
-      }
+    scheduleRender() {
+      this.renderer()
+    }
+    private renderer() {
+      render(this.render && this.render(), this.renderRoot)
     }
   }
+
+  return WithRender
+}

@@ -2,6 +2,7 @@ import { html } from 'lit-html/lib/lit-extended'
 
 import { withRender } from './mixins/withRender'
 import { withShadow } from './mixins/withShadow'
+import { emit } from './utils/emit'
 import { CreateTrickItem } from './sfc/create-trick-item'
 import { Trick } from './types'
 
@@ -17,7 +18,7 @@ const css = html`
   * {
     font-size: 1.5rem;
   }
-  :host {
+  :host, sk-user {
     --default-main-color: #1976d2;
     --content-padding: .5rem;
 
@@ -121,7 +122,7 @@ export class User extends withRender(withShadow(HTMLElement)) implements Props {
   set tricks(value: Array<Trick>) {
     if (value !== this._tricks) {
       this._tricks = value || []
-      this.render()
+      this.scheduleRender()
     }
   }
   get tricks() {
@@ -148,12 +149,12 @@ export class User extends withRender(withShadow(HTMLElement)) implements Props {
   }
 
   attributeChangedCallback(name: Attrs, oldValue: string | null, newValue: string | null) {
-    this.render()
+    this.scheduleRender()
   }
 
   connectedCallback() {
-    super.connectedCallback()
     console.log('User mounted!')
+    this.scheduleRender()
   }
 
   disconnectedCallback() {
@@ -184,21 +185,17 @@ export class User extends withRender(withShadow(HTMLElement)) implements Props {
       <div>
         <h4>User knows following tricks:</h4>
         <ul>
-          ${tricks.map(trick => CreateTrickItem({ trick, onRemove: this.emitRemoveTrick }))}
+          ${tricks.map(trick => CreateTrickItem({ trick, onRemove: this.emitRemoveTrick.bind(this) }))}
         </ul>
       </div>
     `
   }
 
   private emitLearnTrick(trick: Trick) {
-    const eventConfig = { bubble: true, composed: true, detail: trick }
-    const event = new CustomEvent(User.events.learnTrick, eventConfig)
-    this.shadowRoot!.dispatchEvent(event)
+    emit(this, User.events.learnTrick, { detail: trick })
   }
-  private emitRemoveTrick = (trick: Trick) => {
-    const eventConfig = { bubble: true, composed: true, detail: trick }
-    const event = new CustomEvent(User.events.removeTrick, eventConfig)
-    this.shadowRoot!.dispatchEvent(event)
+  private emitRemoveTrick(trick: Trick) {
+    emit(this, User.events.removeTrick, { detail: trick })
   }
 }
 

@@ -46,7 +46,7 @@ class App extends withRender(withShadow(HTMLElement)) {
   private _logs: Array<LogItem> = []
   private set logs(value: Array<LogItem>) {
     this._logs = value
-    this.render()
+    this.scheduleRender()
   }
   private get logs() {
     return this._logs
@@ -68,8 +68,8 @@ class App extends withRender(withShadow(HTMLElement)) {
   }
 
   connectedCallback() {
-    super.connectedCallback()
     console.log('App mounted')
+    this.scheduleRender()
   }
 
   render() {
