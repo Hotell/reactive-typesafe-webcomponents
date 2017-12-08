@@ -2,6 +2,7 @@ import { html } from 'lit-html/lib/lit-extended'
 
 import { withRender } from './mixins/withRender'
 import { withShadow } from './mixins/withShadow'
+import { withProps } from './mixins/withProps'
 import { emit } from './utils/emit'
 import { CreateTrickItem } from './sfc/create-trick-item'
 import { Trick } from './types'
@@ -91,8 +92,7 @@ const css = html`
   }
   </style>
 `
-
-export class User extends withRender(withShadow(HTMLElement)) implements Props {
+export class User extends withProps<Props>(withRender(withShadow(HTMLElement))) {
   static readonly is = 'sk-user'
   static get events() {
     return {
@@ -100,33 +100,22 @@ export class User extends withRender(withShadow(HTMLElement)) implements Props {
       removeTrick: 'removeTrick',
     }
   }
-  static get observedAttributes(): Array<Attrs> {
-    return ['name', 'age']
-  }
 
-  set name(value: string) {
-    this.setAttribute('name', value)
-  }
-  get name() {
-    return this.getAttribute('name') || 'Unknown'
-  }
-
-  set age(value: number) {
-    this.setAttribute('name', String(value))
-  }
-  get age() {
-    return Number(this.getAttribute('age')) || 0
-  }
-
-  private _tricks: Array<Trick> = []
-  set tricks(value: Array<Trick>) {
-    if (value !== this._tricks) {
-      this._tricks = value || []
-      this.scheduleRender()
-    }
-  }
-  get tricks() {
-    return this._tricks
+  static properties = {
+    name: {
+      type: String,
+      reflectToAttribute: true,
+      value: 'Unknown',
+    },
+    age: {
+      type: Number,
+      reflectToAttribute: true,
+      value: 0,
+    },
+    tricks: {
+      type: Array,
+      value: [],
+    },
   }
 
   private handleNewTrickAddition = (event: Event) => {
@@ -148,13 +137,8 @@ export class User extends withRender(withShadow(HTMLElement)) implements Props {
     input.focus()
   }
 
-  attributeChangedCallback(name: Attrs, oldValue: string | null, newValue: string | null) {
-    this.scheduleRender()
-  }
-
   connectedCallback() {
     console.log('User mounted!')
-    this.scheduleRender()
   }
 
   disconnectedCallback() {
@@ -162,7 +146,7 @@ export class User extends withRender(withShadow(HTMLElement)) implements Props {
   }
 
   render() {
-    const { name, age, tricks } = this
+    const { name, age, tricks } = this.props
 
     return html`
       ${css}
