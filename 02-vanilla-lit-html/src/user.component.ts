@@ -1,13 +1,11 @@
 import { html } from 'lit-html/lib/lit-extended'
 
-import { withRender } from './mixins/withRender'
-import { withShadow } from './mixins/withShadow'
-import { withProps } from './mixins/withProps'
+import { withComponent } from './mixins/withComponent'
 import { emit } from './utils/emit'
+
 import { CreateTrickItem } from './sfc/create-trick-item'
 import { Trick } from './types'
 
-type Attrs = 'name' | 'age'
 type Props = {
   name: string
   age: number
@@ -92,7 +90,12 @@ const css = html`
   }
   </style>
 `
-export class User extends withProps<Props>(withRender(withShadow(HTMLElement))) {
+
+class Component<P> extends withComponent() {
+  props: P
+}
+
+export class User extends Component<Props> {
   static readonly is = 'sk-user'
   static get events() {
     return {

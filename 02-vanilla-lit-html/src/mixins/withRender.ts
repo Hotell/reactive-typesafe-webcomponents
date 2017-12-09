@@ -7,7 +7,7 @@ interface LitElement extends CustomElement {
   render(): TemplateResult
 }
 
-export const withRender = <TBase extends Constructor<HTMLElement>>(Base: TBase) => {
+export const withRender = <T extends Constructor<CustomElement>>(Base: T) => {
   abstract class WithRender extends Base {
     private get renderRoot() {
       return this.shadowRoot ? this.shadowRoot : this

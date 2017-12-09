@@ -6,9 +6,7 @@ interface PropDefinition {
   reflectToAttribute?: boolean
 }
 
-export const withProps = <P = {}, TBase extends Constructor<CustomElement> = Constructor<CustomElement>>(
-  Base: TBase
-) => {
+export const withProps = <P = {}, T extends Constructor<CustomElement> = Constructor<CustomElement>>(Base: T) => {
   class WithProps extends Base {
     static get observedAttributes() {
       return this._observedAttributes
@@ -18,7 +16,7 @@ export const withProps = <P = {}, TBase extends Constructor<CustomElement> = Con
     }
 
     private static _properties: { [key: string]: PropDefinition }
-    static get properties(): { [key: string]: PropDefinition } {
+    static get properties() {
       return this._properties || {}
     }
     static set properties(props: { [key: string]: PropDefinition }) {
@@ -26,10 +24,6 @@ export const withProps = <P = {}, TBase extends Constructor<CustomElement> = Con
       this._properties = props
     }
     private static _observedAttributes: Array<string>
-    // constructor(...args: any[]) {
-    //   super(...args)
-    //   this.setupProps()
-    // }
 
     attributeChangedCallback(this: any, name: string, oldValue: string | null, newValue: string | null) {
       super.attributeChangedCallback && super.attributeChangedCallback(name, oldValue, newValue)
