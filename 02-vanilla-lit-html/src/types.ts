@@ -1,6 +1,6 @@
 export type Trick = {
   name: string
-  difficulty: 'easy' | 'medium' | 'hard'
+  difficulty: 'easy' | 'medium' | 'hard' | string
 }
 
 export type LogItem = {

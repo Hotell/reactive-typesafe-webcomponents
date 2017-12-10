@@ -12,6 +12,11 @@ type Props = {
   tricks: Array<Trick>
 }
 
+type State = {
+  trickName: string
+  trickDifficulty: string
+}
+
 const css = html`
   <style>
   * {
@@ -91,8 +96,9 @@ const css = html`
   </style>
 `
 
-class Component<P> extends withComponent() {
+class Component<P = {}, S = {}> extends withComponent() {
   props: P
+  state: S
 }
 
 export class User extends Component<Props> {
@@ -121,21 +127,29 @@ export class User extends Component<Props> {
     },
   }
 
+  state = {
+    trickName: '',
+    trickDifficulty: '',
+  }
+
   private handleNewTrickAddition = (event: Event) => {
     event.preventDefault()
     const target = event.target as EventTarget & { elements: [HTMLInputElement, HTMLSelectElement] }
     const [input, select] = target.elements
 
-    const newTrick = {
-      name: input.value,
-      difficulty: select.value,
-    } as Trick
+    const { trickDifficulty, trickName } = this.state
+
+    const newTrick: Trick = {
+      name: trickName,
+      difficulty: trickDifficulty,
+    }
 
     this.emitLearnTrick(newTrick)
 
-    // @TODO -> refactor to data driven mutation muhahaha ! bleh! eak!
-    input.value = ''
-    select.value = ''
+    this.setState({
+      trickDifficulty: '',
+      trickName: '',
+    })
 
     input.focus()
   }
@@ -150,6 +164,7 @@ export class User extends Component<Props> {
 
   render() {
     const { name, age, tricks } = this.props
+    const { trickName, trickDifficulty } = this.state
 
     return html`
       ${css}
@@ -160,8 +175,18 @@ export class User extends Component<Props> {
         Only <b id="age">${age}</b> years old? Time to learn new tricks!
       </div>
       <form autocomplete="off" on-submit="${this.handleNewTrickAddition}">
-        <input class="form-controll" name="trickName">
-        <select class="form-controll" name="trickDifficulty">
+        <input
+          class="form-controll"
+          name="trickName"
+          value=${trickName}
+          on-input=${this.changeValue}
+        />
+        <select
+          class="form-controll"
+          name="trickDifficulty"
+          value=${trickDifficulty}
+          on-input=${this.changeValue}
+        >
           <option value="">--chose difficulty--</option>
           <option value="easy">easy</option>
           <option value="medium">medium</option>
@@ -183,6 +208,14 @@ export class User extends Component<Props> {
   }
   private emitRemoveTrick(trick: Trick) {
     emit(this, User.events.removeTrick, { detail: trick })
+  }
+  private changeValue = (event: Event) => {
+    type EventTargets = HTMLInputElement | HTMLSelectElement
+    type KnownProps = 'trickName' | 'trickDifficulty'
+    const target = event.target as EventTargets
+    const name = target.name as KnownProps
+    const value = target.value
+    this.setState({ [name]: value })
   }
 }
 

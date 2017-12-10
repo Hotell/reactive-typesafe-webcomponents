@@ -6,7 +6,9 @@ interface PropDefinition {
   reflectToAttribute?: boolean
 }
 
-export const withProps = <P = {}, T extends Constructor<CustomElement> = Constructor<CustomElement>>(Base: T) => {
+export const withProps = <P = {}, S = {}, T extends Constructor<CustomElement> = Constructor<CustomElement>>(
+  Base: T
+) => {
   class WithProps extends Base {
     static get observedAttributes() {
       return this._observedAttributes
@@ -46,6 +48,26 @@ export const withProps = <P = {}, T extends Constructor<CustomElement> = Constru
         prev[curr] = this[curr]
         return prev
       }, {})
+    }
+
+    private _defaultStateHasBeenSet = false
+    private _state: S
+
+    get state() {
+      return this._state
+    }
+    set state(defaultState: Partial<S>) {
+      if (this._defaultStateHasBeenSet) {
+        throw new Error('for updating state use setState()')
+      }
+      this._defaultStateHasBeenSet = true
+      this._state = defaultState as S
+    }
+    setState(newState: Partial<S>): void
+    setState(newState = {}) {
+      const state = { ...(this._state as {}), ...(newState as {}) } as S
+      this._state = state
+      this.scheduleRender && this.scheduleRender()
     }
 
     private static setupProps(properties: { [key: string]: PropDefinition }) {
