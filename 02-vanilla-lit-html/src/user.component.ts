@@ -1,6 +1,7 @@
 import { html } from 'lit-html/lib/lit-extended'
 
 import { withComponent } from './mixins/withComponent'
+import { Event as EmitterEvent } from './mixins/withEmitter'
 import { emit } from './utils/emit'
 
 import { CreateTrickItem } from './sfc/create-trick-item'
@@ -15,6 +16,10 @@ type Props = {
 type State = {
   trickName: string
   trickDifficulty: string
+}
+type Events = {
+  learnTrick: EmitterEvent<Trick>
+  removeTrick: EmitterEvent<Trick>
 }
 
 const css = html`
@@ -96,20 +101,14 @@ const css = html`
   </style>
 `
 
-class Component<P = {}, S = {}> extends withComponent() {
+class Component<P = {}, S = {}, E = {}> extends withComponent() {
   props: P
   state: S
+  events: E
 }
 
-export class User extends Component<Props> {
+export class User extends Component<Props, State, Events> {
   static readonly is = 'sk-user'
-  static get events() {
-    return {
-      learnTrick: 'learnTrick',
-      removeTrick: 'removeTrick',
-    }
-  }
-
   static properties = {
     name: {
       type: String,
@@ -125,6 +124,10 @@ export class User extends Component<Props> {
       type: Array,
       value: [],
     },
+  }
+  static events = {
+    learnTrick: {},
+    removeTrick: {},
   }
 
   state = {
@@ -144,7 +147,7 @@ export class User extends Component<Props> {
       difficulty: trickDifficulty,
     }
 
-    this.emitLearnTrick(newTrick)
+    this.events.learnTrick(newTrick)
 
     this.setState({
       trickDifficulty: '',
@@ -197,18 +200,12 @@ export class User extends Component<Props> {
       <div>
         <h4>User knows following tricks:</h4>
         <ul>
-          ${tricks.map(trick => CreateTrickItem({ trick, onRemove: this.emitRemoveTrick.bind(this) }))}
+          ${tricks.map(trick => CreateTrickItem({ trick, onRemove: this.events.removeTrick }))}
         </ul>
       </div>
     `
   }
 
-  private emitLearnTrick(trick: Trick) {
-    emit(this, User.events.learnTrick, { detail: trick })
-  }
-  private emitRemoveTrick(trick: Trick) {
-    emit(this, User.events.removeTrick, { detail: trick })
-  }
   private changeValue = (event: Event) => {
     type EventTargets = HTMLInputElement | HTMLSelectElement
     type KnownProps = 'trickName' | 'trickDifficulty'
